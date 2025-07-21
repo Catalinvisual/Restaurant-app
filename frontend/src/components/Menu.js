@@ -31,22 +31,22 @@ const fetchMenuItems = async () => {
 
 
   const handleSearch = async (e) => {
-    const value = e.target.value;
-    setSearchTerm(value);
+  const value = e.target.value;
+  setSearchTerm(value);
 
-    if (value.trim() === "") {
-      fetchMenuItems();
-    } else {
-      try {
-        const res = await fetch(`${API_URL}/menu/search?q=${value}`);
-        const data = await res.json();
-        setMenuItems(data);
-      } catch (err) {
-        console.error("❌ Search error:", err.message);
-        setMenuItems([]);
-      }
+  if (value.trim() === "") {
+    fetchMenuItems();
+  } else {
+    try {
+      const res = await fetch(`${API_URL}/api/menu/search?q=${value}`);
+      const data = await res.json();
+      setMenuItems(data);
+    } catch (err) {
+      console.error("❌ Search error:", err.message);
+      setMenuItems([]);
     }
-  };
+  }
+};
 
   return (
     <>
