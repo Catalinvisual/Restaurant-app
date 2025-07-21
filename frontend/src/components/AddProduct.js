@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://restaurant-app-backend-kvvn.onrender.com";
 
 
 function AddProduct() {
