@@ -4,14 +4,12 @@ import { CartContext } from "./CartContext";
 import Footer from "./Footer";
 import { FaShoppingCart } from "react-icons/fa";
 import { toast } from "react-toastify";
-import Loading from "./Loading";
 import "../styles/Menu.css";
 
 const API_URL = "https://restaurant-app-backend-kvvn.onrender.com";
 
 function Menu() {
   const [menuItems, setMenuItems] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const { addToCart, removeFromCart, getQuantity } = useContext(CartContext);
 
@@ -20,7 +18,6 @@ function Menu() {
   }, []);
 
   const fetchMenuItems = async () => {
-    setLoading(true);
     try {
       const res = await fetch(`${API_URL}/api/menu`);
       const data = await res.json();
@@ -28,8 +25,6 @@ function Menu() {
     } catch (err) {
       console.error("❌ Error loading menu:", err.message);
       setMenuItems([]);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -40,7 +35,6 @@ function Menu() {
     if (value.trim() === "") {
       fetchMenuItems();
     } else {
-      setLoading(true);
       try {
         const res = await fetch(`${API_URL}/api/menu/search?q=${value}`);
         const data = await res.json();
@@ -48,8 +42,6 @@ function Menu() {
       } catch (err) {
         console.error("❌ Search error:", err.message);
         setMenuItems([]);
-      } finally {
-        setLoading(false);
       }
     }
   };
@@ -68,10 +60,8 @@ function Menu() {
         />
 
         <div className="product-grid">
-          {loading ? (
-            <Loading />
-          ) : menuItems.length === 0 ? (
-            <p>😕 No products found.</p>
+          {menuItems.length === 0 ? (
+            <p>🔄 No products found.</p>
           ) : (
             menuItems.map((item) => {
               const quantity = getQuantity(item.id);
