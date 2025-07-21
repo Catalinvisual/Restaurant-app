@@ -19,8 +19,6 @@ app.post("/upload", upload.single("image"), (req, res) => {
   if (!req.file || !req.file.secure_url) {
     return res.status(400).json({ error: "Missing or invalid image file." });
   }
-
-  // ✅ Send back cloud-hosted image URL
   res.json({ imageUrl: req.file.secure_url });
 });
 
@@ -81,12 +79,15 @@ app.post("/checkout", async (req, res) => {
   }
 });
 
-// 🌐 Root
+// 🌐 Root check
 app.get("/", (req, res) => res.send("✅ Express backend is running"));
 
 // 🔐 Auth & Menu routes
-app.use(require("./routes/auth"));
+app.use("/api", require("./routes/auth"));
 app.use("/api", require("./routes/menu"));
+
+// ✅ Ping route for Render uptime
+app.get("/ping", (req, res) => res.send("🔄 Server awake"));
 
 // 🚀 Start server
 app.listen(PORT, () => {
