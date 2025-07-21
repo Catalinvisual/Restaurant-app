@@ -24,7 +24,7 @@ function ResetPassword() {
       setLoading(true);
       console.log("🔐 Sending password reset for:", { email, newPassword });
 
-      const res = await fetch("http://localhost:5000/reset-password", {
+      const res = await fetch("https://restaurant-app-backend-kvvn.onrender.com/reset-password", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, newPassword }),
