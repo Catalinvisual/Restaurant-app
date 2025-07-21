@@ -9,7 +9,6 @@ import "../styles/Menu.css";
 // 🔗 Backend public pe Render
 const API_URL = "https://restaurant-app-backend-kvvn.onrender.com";
 
-
 function Menu() {
   const [menuItems, setMenuItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,16 +18,17 @@ function Menu() {
     fetchMenuItems();
   }, []);
 
-  const fetchMenuItems = async () => {
-    try {
-      const res = await fetch(`${API_URL}/menu`);
-      const data = await res.json();
-      setMenuItems(data);
-    } catch (err) {
-      console.error("❌ Error loading menu:", err.message);
-      setMenuItems([]);
-    }
-  };
+const fetchMenuItems = async () => {
+  try {
+    const res = await fetch(`${API_URL}/api/menu`);
+    const data = await res.json();
+    setMenuItems(data);
+  } catch (err) {
+    console.error("❌ Error loading menu:", err.message);
+    setMenuItems([]);
+  }
+};
+
 
   const handleSearch = async (e) => {
     const value = e.target.value;
