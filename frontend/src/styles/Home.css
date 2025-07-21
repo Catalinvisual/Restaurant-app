@@ -1,0 +1,331 @@
+/* Home page container */
+.home-page {
+  background-color: #111;
+  color: #eee;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+/* Hero section video */
+.hero-container {
+  position: relative;
+  width: 100%;
+  height: 70vh;
+  overflow: hidden;
+}
+
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Overlay text */
+.video-overlay {
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;        /* ✅ centrăm pe orizontală */
+  text-align: center;
+}
+
+.video-overlay h1 {
+  font-size: 2.5rem;
+  color: orange;
+  margin-bottom: 1rem;
+}
+
+.video-overlay p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.menu-btn {
+  display: inline-block;
+  background-color: #f27d0c;
+  color: white;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  max-width: 180px;
+}
+
+
+.menu-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Despre noi */
+.about-section {
+  padding: 1rem 2rem;
+  text-align: center;
+}
+
+.about-section h2 {
+  color: orange;
+  margin-bottom: 1rem;
+}
+
+.about-section p {
+  font-size: 1.1rem;
+  color: #ccc;
+}
+
+/* Servicii */
+.services-section {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.services-section h2 {
+  color: orange;
+  margin-bottom: 2rem;
+}
+
+.service-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+}
+
+.service-card {
+  background-color: #1c1c1c;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 8px #000;
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+}
+
+.service-card span {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.service-card h3 {
+  color: orange;
+  margin-bottom: 0.5rem;
+}
+
+/* Galerie */
+.gallery-section {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.gallery-section h2 {
+  color: orange;
+  margin-bottom: 2rem;
+  padding: 2.5rem 1.5rem;
+
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  padding: 0 1rem;
+}
+
+.gallery-grid img,
+.chef-section img {
+  width: 160px;              /* sau orice dimensiune pătrată */
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 6px #000;  /* opțional pentru stil */
+  display: block;
+  margin: auto;              /* opțional pentru centrare */
+}
+
+
+/* Chef */
+.chef-section {
+  padding: 3rem 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2rem;
+  background-color: #1a1a1a;
+  border-top: 1px solid #333;
+}
+
+.chef-section img {
+  max-width: 340px;
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 0 12px #000;
+}
+
+.chef-content {
+  flex: 1;
+  min-width: 240px;
+}
+
+.chef-content h2 {
+  color: orange;
+  margin-bottom: 1rem;
+}
+
+.chef-content p {
+  font-size: 1.1rem;
+  color: #ccc;
+}
+
+.chef-content blockquote {
+  margin-top: 1rem;
+  font-style: italic;
+  color: #aaa;
+}
+
+/* Testimoniale */
+.testimonials-section {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.testimonials-section h2 {
+  color: orange;
+  margin-bottom: 2rem;
+}
+
+.testimonial-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+}
+
+.testimonial-card {
+  background-color: #1e1e1e;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 8px #000;
+}
+
+.testimonial-card span {
+  display: block;
+  margin: 1rem 0;
+  color: gold;
+  font-size: 1.2rem;
+}
+
+.testimonial-card h4 {
+  color: #ccc;
+  font-weight: normal;
+}
+
+/* Rezervare */
+.reservation-section {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.reservation-section h2 {
+  color: orange;
+  margin-bottom: 2rem;
+}
+
+.reservation-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  max-width: 700px;
+  margin: auto;
+}
+
+.reservation-form input {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #444;
+  background-color: #222;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.reservation-form button {
+  grid-column: span 2;
+  padding: 0.8rem 1.5rem;
+  background-color: #f27d0c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reservation-form button:hover {
+  background-color: #ff7700;
+}
+
+/* Responsive media queries */
+@media (max-width: 768px) {
+  .hero-video,
+  .video-overlay {
+    height: 60vh;
+  }
+
+  .video-overlay h1 {
+    font-size: 2rem;
+  }
+
+  .service-card {
+    padding: 1.5rem;
+  }
+
+  .chef-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .reservation-form button {
+    grid-column: span 1;
+  }
+
+  .about-section {
+  padding: 0.8rem 2rem;
+  text-align: center;
+}
+}
+
+@media (max-width: 600px) {
+  .video-overlay h1 {
+    font-size: 1.3rem;
+  }
+
+  .video-overlay p {
+    font-size: 0.8rem;
+  }
+
+  .menu-btn {
+  width: 180px;
+  
+}
+
+.about-section {
+  padding: 0.5rem 5rem;
+  text-align: center;
+}
+
+.gallery-grid {
+    gap: 0.9rem;
+  }
+
+
+}

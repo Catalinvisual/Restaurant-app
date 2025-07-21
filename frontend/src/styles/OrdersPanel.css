@@ -1,0 +1,168 @@
+.orders-panel {
+  background-color: #111;
+  color: #eee;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.orders-panel h2 {
+  color: orange;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* 🧮 Rezumat */
+.orders-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.summary-box {
+  background-color: #1a1a1a;
+  border: 2px solid orange;
+  color: #ffa64d;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 0 10px #000;
+  flex: 1;
+  min-width: 180px;
+}
+
+/* 🎛️ Filtre */
+.orders-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.orders-filters input,
+.orders-filters select {
+  background-color: #222;
+  color: #fff;
+  border: 1px solid #444;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.orders-filters select option {
+  background-color: #1a1a1a;
+  color: #eee;
+}
+
+/* 📋 Card comenzi */
+.order-card {
+  background-color: #1e1e1e;
+  border-left: 4px solid orange;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 10px #000;
+  transition: border-left 0.3s ease;
+}
+
+.order-card h3 {
+  color: #ffa64d;
+  margin-bottom: 1rem;
+}
+
+.order-card ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1rem;
+}
+
+.order-card li {
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #333;
+}
+
+/* 🟩 Status vizual */
+.order-card.livrat {
+  border-left: 4px solid #28a745;
+}
+
+.order-card.în-așteptare {
+  border-left: 4px solid orange;
+}
+
+
+/* 🟠 Buton portocaliu */
+.orange-btn {
+  background-color: orange;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.orange-btn:hover {
+  background-color: #ff7700;
+}
+
+.orange-btn:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+/* 🔢 Paginare */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: 0.5rem;
+}
+
+.page-btn {
+  background-color: #1a1a1a;
+  color: #eee;
+  border: 2px solid #333;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.page-btn:hover {
+  border-color: orange;
+  color: orange;
+}
+
+.page-btn.active {
+  background-color: orange;
+  color: #111;
+  border-color: orange;
+}
+
+.no-orders {
+  background-color: #1a1a1a;
+  border: 2px dashed orange;
+  color: #ffa64d;
+  text-align: center;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 0 12px #000;
+  margin: 2rem auto;
+  max-width: 600px;
+}
+
+.no-orders h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.no-orders p {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #ddd;
+}

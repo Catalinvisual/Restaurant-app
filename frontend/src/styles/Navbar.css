@@ -1,0 +1,170 @@
+/* 🔹 Navbar container */
+.custom-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  backdrop-filter: blur(10px);
+  background-color: rgba(26, 26, 26, 0.92);
+  padding: 0.8rem 1.5rem;
+  box-shadow: 0 0 10px #000;
+  transition: background-color 0.3s ease;
+  position: relative; /* ✅ necesar pentru .language-switch centrat absolut */
+}
+
+/* 🔸 Brand logo */
+.logo {
+  color: orange;
+  font-weight: 700;
+  font-size: 1.4rem;
+  text-shadow: 0 0 6px #ff7700;
+  text-decoration: none;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.logo:hover {
+  color: #ffa64d;
+  text-shadow: 0 0 10px #ffa64d;
+}
+
+/* 🔗 Navbar links */
+.navbar .nav-link {
+  color: #fdfdfd !important;
+  text-decoration: none;
+  padding: 8px 14px;
+  margin-right: 0.5rem;
+  font-weight: 500;
+  position: relative;
+  border-radius: 4px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.navbar .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  bottom: 6px;
+  width: 0%;
+  height: 2px;
+  background-color: #ffa64d;
+  transition: width 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+  color: #ffa64d !important;
+  background-color: rgba(255, 166, 77, 0.07);
+}
+
+.navbar .nav-link:hover::after {
+  width: 60%;
+}
+
+.navbar .nav-link.active {
+  color: #ffa64d !important;
+  border-bottom: 2px solid #ffa64d;
+  font-weight: 600;
+}
+
+/* 🧑 Icon login/register */
+.nav-icon.user-icon {
+  margin-left: auto;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.nav-icon.user-icon:hover {
+  transform: scale(1.1);
+}
+
+.nav-icon.user-icon img {
+  width: 26px;
+  height: 26px;
+  filter: brightness(1.2);
+  transition: filter 0.3s ease;
+}
+
+.nav-icon.user-icon:hover img {
+  filter: drop-shadow(0 0 2px #ffa64d);
+}
+
+/* 🍔 Hamburger icon alb */
+.hamburger-icon {
+  border: none;
+  background-color: transparent;
+  padding: 0.4rem;
+  transition: border 0.3s ease;
+}
+
+.hamburger-icon .navbar-toggler-icon {
+  background-image: url("../../public/hamburger-white.svg");
+  background-repeat: no-repeat;
+  background-size: 24px 24px;
+  width: 32px;
+  height: 32px;
+}
+
+.hamburger-icon.navbar-toggler:focus,
+.hamburger-icon.navbar-toggler[aria-expanded="true"] {
+  border: 2px solid #ffa64d;
+  border-radius: 6px;
+}
+
+/* 📱 Responsive collapse */
+.navbar-collapse {
+  background-color: #1a1a1a;
+  padding: 1rem;
+  transition: max-height 0.3s ease;
+}
+
+@media (max-width: 991px) {
+  .navbar-collapse .nav-link {
+    display: block;
+    padding: 0.8rem 0;
+    text-align: center;
+    margin: 0;
+  }
+
+  .nav-icon.user-icon {
+    margin-top: 1rem;
+    margin-left: 0;
+    justify-content: center;
+  }
+
+  .language-switch {
+    position: static;
+    transform: none;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+}
+
+/* 🌐 Butoane de limbă centrate între logo și meniu */
+.language-switch {
+  display: flex;
+  gap: 0.6rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+/* 🔘 Stil butoane EN/NL */
+.language-switch .lang-btn {
+  background-color: transparent;
+  color: #ffa64d;
+  border: 1px solid #ffa64d;
+  border-radius: 4px;
+  padding: 0.3rem 0.6rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.language-switch .lang-btn:hover {
+  background-color: #ffa64d;
+  color: #1a1a1a;
+}

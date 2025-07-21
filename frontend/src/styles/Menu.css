@@ -1,0 +1,140 @@
+body {
+  background-color: #111;
+  color: #eee;
+  font-family: 'Segoe UI', sans-serif;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+.product-section {
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.product-section h2 {
+  color: orange;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.search-bar {
+  background-color: #222;
+  color: #fff;
+  border: 1px solid #444;
+  margin-bottom: 2rem;
+}
+
+.search-bar::placeholder {
+  color: #aaa;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  animation: fadeIn 0.6s ease-in;
+}
+
+.product-card {
+  background-color: #1a1a1a;
+  color: #eee;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 6px #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  cursor: pointer;
+  height: 100%;
+}
+
+.product-card:hover {
+  transform: scale(1.03);
+  background-color: #222;
+  box-shadow: 0 0 14px #ff7f1f;
+}
+
+.product-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.bottom-card {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.price {
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  color: #f6b26b;
+}
+
+.orange-btn {
+  background-color: orange;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+.orange-btn:hover {
+  background-color: #ff7700;
+  color: #fff;
+}
+
+.confirm-btn {
+  margin-top: 0.5rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.add-to-cart-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px; /* ⬅️ Mărit de la 8px */
+  background-color: #ffa64d;
+  color: #1a1a1a;
+  font-weight: bold;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 5px rgba(255, 166, 77, 0.3);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+
+.add-to-cart-btn:hover {
+  background-color: #ff9900;
+  transform: scale(1.03);
+}
+
+.cart-btn-icon {
+  width: 20px;
+  height: 20px;
+  color: #1a1a1a;
+  transition: transform 0.3s ease;
+}
+
+
+.add-to-cart-btn:hover .cart-btn-icon {
+  transform: scale(1.2);
+  color: #000;
+}
