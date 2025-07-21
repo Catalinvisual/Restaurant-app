@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import "../styles/OrdersPanel.css";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://restaurant-app-backend-kvvn.onrender.com";
 
 
 function OrdersPanel() {
