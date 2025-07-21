@@ -14,7 +14,7 @@ export function CartProvider({ children }) {
   // 🔁 Reusable fetch function
   const fetchMenuItems = async () => {
     try {
-      const res = await fetch("http://localhost:5000/menu");
+      const res = await fetch("https://restaurant-app-backend-kvvn.onrender.com/menu");
       const data = await res.json();
       setMenuItems(data);
     } catch (err) {
