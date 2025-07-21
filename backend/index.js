@@ -86,7 +86,7 @@ app.get("/", (req, res) => res.send("✅ Express backend is running"));
 
 // 🔐 Auth & Menu routes
 app.use(require("./routes/auth"));
-app.use(require("./routes/menu"));
+app.use("/api", require("./routes/menu"));
 
 // 🚀 Start server
 app.listen(PORT, () => {
