@@ -3,7 +3,7 @@ import "../styles/Register.css";
 import { useNavigate } from "react-router-dom";
 
 // 🔗 Backend public pe Render
-const API_URL = "http://localhost:5000";
+const API_URL = "https://restaurant-app-backend-kvvn.onrender.com";
 
 
 function Register() {
