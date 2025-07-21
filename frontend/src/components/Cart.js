@@ -20,7 +20,7 @@ function Cart() {
     try {
       const email = "test@mailtrap.io";
 
-      const res = await fetch("http://localhost:5000/checkout", {
+      const res = await fetch("https://restaurant-app-backend-kvvn.onrender.com/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items: cartItems, total, email }),
