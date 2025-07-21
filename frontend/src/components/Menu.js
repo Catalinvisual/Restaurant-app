@@ -4,13 +4,14 @@ import { CartContext } from "./CartContext";
 import Footer from "./Footer";
 import { FaShoppingCart } from "react-icons/fa";
 import { toast } from "react-toastify";
+import Loading from "./Loading";
 import "../styles/Menu.css";
 
-// 🔗 Backend public pe Render
 const API_URL = "https://restaurant-app-backend-kvvn.onrender.com";
 
 function Menu() {
   const [menuItems, setMenuItems] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const { addToCart, removeFromCart, getQuantity } = useContext(CartContext);
 
@@ -18,35 +19,40 @@ function Menu() {
     fetchMenuItems();
   }, []);
 
-const fetchMenuItems = async () => {
-  try {
-    const res = await fetch(`${API_URL}/api/menu`);
-    const data = await res.json();
-    setMenuItems(data);
-  } catch (err) {
-    console.error("❌ Error loading menu:", err.message);
-    setMenuItems([]);
-  }
-};
-
-
-  const handleSearch = async (e) => {
-  const value = e.target.value;
-  setSearchTerm(value);
-
-  if (value.trim() === "") {
-    fetchMenuItems();
-  } else {
+  const fetchMenuItems = async () => {
+    setLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/menu/search?q=${value}`);
+      const res = await fetch(`${API_URL}/api/menu`);
       const data = await res.json();
       setMenuItems(data);
     } catch (err) {
-      console.error("❌ Search error:", err.message);
+      console.error("❌ Error loading menu:", err.message);
       setMenuItems([]);
+    } finally {
+      setLoading(false);
     }
-  }
-};
+  };
+
+  const handleSearch = async (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+
+    if (value.trim() === "") {
+      fetchMenuItems();
+    } else {
+      setLoading(true);
+      try {
+        const res = await fetch(`${API_URL}/api/menu/search?q=${value}`);
+        const data = await res.json();
+        setMenuItems(data);
+      } catch (err) {
+        console.error("❌ Search error:", err.message);
+        setMenuItems([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
 
   return (
     <>
@@ -62,91 +68,90 @@ const fetchMenuItems = async () => {
         />
 
         <div className="product-grid">
-  {menuItems.length === 0 ? (
-    <p>🔄 Loading menu or no products found...</p>
-  ) : (
-    menuItems.map((item) => {
-      const quantity = getQuantity(item.id);
-      const name = item.name || "Name unavailable";
-      const description = item.description || "Description unavailable";
-      const validImage = item.image_url?.startsWith("http");
-
-      return (
-        <div className="product-card" key={item.id}>
-          {validImage ? (
-            <img
-              src={item.image_url}
-              alt={name}
-              className="product-img"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = `${process.env.PUBLIC_URL}/img/no-image.png`;
-              }}
-            />
+          {loading ? (
+            <Loading />
+          ) : menuItems.length === 0 ? (
+            <p>😕 No products found.</p>
           ) : (
-            <div className="no-img-placeholder">❌ Image unavailable</div>
+            menuItems.map((item) => {
+              const quantity = getQuantity(item.id);
+              const name = item.name || "Name unavailable";
+              const description = item.description || "Description unavailable";
+              const validImage = item.image_url?.startsWith("http");
+
+              return (
+                <div className="product-card" key={item.id}>
+                  {validImage ? (
+                    <img
+                      src={item.image_url}
+                      alt={name}
+                      className="product-img"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = `${process.env.PUBLIC_URL}/img/no-image.png`;
+                      }}
+                    />
+                  ) : (
+                    <div className="no-img-placeholder">❌ Image unavailable</div>
+                  )}
+
+                  <h3>{name}</h3>
+                  <p className="product-description">{description}</p>
+
+                  <div className="bottom-card">
+                    <p className="price">
+                      <strong>{item.price} €</strong>
+                    </p>
+
+                    {quantity === 0 ? (
+                      <Button
+                        variant="primary"
+                        className="add-to-cart-btn"
+                        onClick={() => {
+                          if (item.id && item.price) addToCart(item);
+                          else toast.error("⚠️ Product info incomplete");
+                        }}
+                      >
+                        <FaShoppingCart className="cart-btn-icon" style={{ marginRight: "10px" }} />
+                        <span>Add to cart</span>
+                      </Button>
+                    ) : (
+                      <>
+                        <ButtonGroup className="mb-2">
+                          <Button
+                            variant="outline-danger"
+                            onClick={() => removeFromCart(item.id)}
+                          >
+                            ➖
+                          </Button>
+                          <Button variant="outline-secondary" disabled>
+                            {quantity}
+                          </Button>
+                          <Button
+                            variant="outline-success"
+                            onClick={() => addToCart(item)}
+                          >
+                            ➕
+                          </Button>
+                        </ButtonGroup>
+
+                        <Button
+                          variant="outline-primary"
+                          size="sm"
+                          onClick={() =>
+                            toast.success(`✔️ ${name} (${quantity}) added to cart`)
+                          }
+                        >
+                          Confirm item
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              );
+            })
           )}
-
-          <h3>{name}</h3>
-          <p className="product-description">{description}</p>
-
-          <div className="bottom-card">
-            <p className="price">
-              <strong>{item.price} €</strong>
-            </p>
-
-            {quantity === 0 ? (
-              <Button
-                variant="primary"
-                className="add-to-cart-btn"
-                onClick={() => {
-                  if (item.id && item.price) addToCart(item);
-                  else toast.error("⚠️ Product info incomplete");
-                }}
-              >
-                <FaShoppingCart
-                  className="cart-btn-icon"
-                  style={{ marginRight: "10px" }}
-                />
-                <span>Add to cart</span>
-              </Button>
-            ) : (
-              <>
-                <ButtonGroup className="mb-2">
-                  <Button
-                    variant="outline-danger"
-                    onClick={() => removeFromCart(item.id)}
-                  >
-                    ➖
-                  </Button>
-                  <Button variant="outline-secondary" disabled>
-                    {quantity}
-                  </Button>
-                  <Button
-                    variant="outline-success"
-                    onClick={() => addToCart(item)}
-                  >
-                    ➕
-                  </Button>
-                </ButtonGroup>
-
-                <Button
-                  variant="outline-primary"
-                  size="sm"
-                  onClick={() =>
-                    toast.success(`✔️ ${name} (${quantity}) added to cart`)
-                  }
-                >
-                  Confirm item
-                </Button>
-              </>
-            )}
-          </div>
         </div>
-      );
-    })
-  )}
-</div>
       </main>
 
       <Footer />
