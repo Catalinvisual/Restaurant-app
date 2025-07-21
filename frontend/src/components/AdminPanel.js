@@ -26,7 +26,7 @@ function AdminPanel() {
   const { refreshMenuItems } = useContext(CartContext);
 
   useEffect(() => {
-    fetch("http://localhost:5000/menu")
+    fetch("https://restaurant-app-backend-kvvn.onrender.com/menu")
       .then((res) => res.json())
       .then((data) => setMenuItems(data));
   }, []);
@@ -35,7 +35,7 @@ function AdminPanel() {
     try {
       const form = new FormData();
       form.append("image", file);
-      const res = await fetch("http://localhost:5000/upload", {
+      const res = await fetch("https://restaurant-app-backend-kvvn.onrender.com/upload", {
         method: "POST",
         body: form,
       });
@@ -50,7 +50,7 @@ function AdminPanel() {
 
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/menu/${id}`, {
+      const res = await fetch(`https://restaurant-app-backend-kvvn.onrender.com/menu/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -85,7 +85,7 @@ function AdminPanel() {
     let imageUrl = formData.image_url;
     if (editFile) imageUrl = await uploadImage(editFile);
 
-    await fetch(`http://localhost:5000/menu/${editItem.id}`, {
+    await fetch(`https://restaurant-app-backend-kvvn.onrender.com/menu/${editItem.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -120,7 +120,7 @@ function AdminPanel() {
       return;
     }
 
-    await fetch("http://localhost:5000/menu", {
+    await fetch("https://restaurant-app-backend-kvvn.onrender.com/menu", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
