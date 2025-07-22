@@ -41,12 +41,11 @@ router.post("/menu", async (req, res) => {
 // 📋 List menu
 router.get("/menu", async (req, res) => {
   try {
-    const result = await pool.query("SELECT * FROM menu_items");
-    console.log("📦 MENU RESULT:", result.rows);
+    const result = await pool.query("SELECT NOW()");
     res.json(result.rows);
   } catch (err) {
-    console.error("❌ Fetch menu error:", err.message);
-    res.status(500).json({ error: "Server error while fetching menu." });
+    console.error("❌ Test query error:", err.message);
+    res.status(500).json({ error: "Failed basic DB test." });
   }
 });
 
