@@ -15,7 +15,7 @@ function OrdersPanel() {
   const fetchOrders = async () => {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`${API_URL}/orders`, {
+      const res = await fetch(`${API_URL}/api/orders`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json"
