@@ -7,16 +7,17 @@ import Dish2 from "../assets/images/dish2.jpg";
 import Dish3 from "../assets/images/dish3.jpg";
 import Dish4 from "../assets/images/dish4.jpg";
 import ChefFoto from "../assets/images/chef.jpg";
+
 function Home() {
   return (
     <div className="home-page">
+      {/* 🎥 Hero video */}
       <div className="hero-container">
         <video autoPlay muted loop playsInline className="hero-video">
-      <source src={videoSrc} type="video/mp4" />
-    </video>
+          <source src={videoSrc} type="video/mp4" />
+        </video>
 
-
-        {/* 🔳 Button and text overlay on video */}
+        {/* 🔳 Text & button overlay */}
         <div className="video-overlay">
           <h1>Welcome to Restaurant Andrei</h1>
           <p>Authentic culinary experiences in the heart of the city</p>
@@ -26,12 +27,15 @@ function Home() {
         </div>
       </div>
 
+      {/* 🧑‍🍳 About */}
       <div className="about-section">
         <h2>About Us</h2>
-        <p>Restaurant Andrei offers traditional and international dishes in an elegant and friendly atmosphere.</p>
+        <p>
+          Restaurant Andrei offers traditional and international dishes in an elegant and friendly atmosphere.
+        </p>
       </div>
 
-      {/* What we offer */}
+      {/* 🛎️ Services */}
       <div className="services-section">
         <h2>Our Services</h2>
         <div className="service-cards">
@@ -53,7 +57,7 @@ function Home() {
         </div>
       </div>
 
-      {/* Culinary gallery */}
+      {/* 🍽️ Gallery */}
       <div className="gallery-section">
         <h2>Culinary Gallery</h2>
         <div className="gallery-grid">
@@ -64,18 +68,19 @@ function Home() {
         </div>
       </div>
 
-      {/* Our Chef */}
+      {/* 👨‍🍳 Chef section */}
       <div className="chef-section">
         <img src={ChefFoto} alt="Chef" />
-
         <div className="chef-content">
           <h2>Chef Andrei</h2>
-          <p>With over 20 years of experience, Chef Andrei turns every dish into a memorable story.</p>
+          <p>
+            With over 20 years of experience, Chef Andrei turns every dish into a memorable story.
+          </p>
           <blockquote>“Every flavor is an emotion. Every plate tells a story.”</blockquote>
         </div>
       </div>
 
-      {/* Testimonials */}
+      {/* 💬 Testimonials */}
       <div className="testimonials-section">
         <h2>What Our Customers Say</h2>
         <div className="testimonial-cards">
@@ -92,7 +97,7 @@ function Home() {
         </div>
       </div>
 
-      {/* Reservation */}
+      {/* 📅 Reservation form */}
       <div className="reservation-section">
         <h2>Book a Table</h2>
         <form className="reservation-form">
