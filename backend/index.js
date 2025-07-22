@@ -8,6 +8,16 @@ const nodemailer = require("nodemailer");
 const PORT = process.env.PORT || 5000;
 const app = express();
 
+router.get("/debug-db", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT version()");
+    res.json({ dbVersion: result.rows[0] });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 app.use(cors());
 app.use(express.json());
 
