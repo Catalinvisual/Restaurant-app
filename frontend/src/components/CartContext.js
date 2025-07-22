@@ -6,6 +6,8 @@ export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
 
+  const API_URL = "https://restaurant-app-backend-kvvn.onrender.com";
+
   // 🔄 Initial fetch from backend
   useEffect(() => {
     fetchMenuItems();
@@ -14,11 +16,11 @@ export function CartProvider({ children }) {
   // 🔁 Reusable fetch function
   const fetchMenuItems = async () => {
     try {
-      const res = await fetch("https://restaurant-app-backend-kvvn.onrender.com/menu");
+      const res = await fetch(`${API_URL}/api/menu`);
       const data = await res.json();
       setMenuItems(data);
     } catch (err) {
-      console.error("❌ Error loading menu:", err);
+      console.error("❌ Error loading menu:", err.message);
     }
   };
 
