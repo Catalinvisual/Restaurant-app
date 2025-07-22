@@ -41,14 +41,11 @@ router.post("/menu", async (req, res) => {
 // 📋 List menu
 router.get("/menu", async (req, res) => {
   try {
-    const result = await pool.query(`
-      SELECT id, name, description, price, image_url
-      FROM menu_items
-      ORDER BY id ASC
-    `);
+    const result = await pool.query("SELECT * FROM menu_items");
+    console.log("📦 MENU RESULT:", result.rows);
     res.json(result.rows);
   } catch (err) {
-    console.error("❌ Error fetching menu:", err.message);
+    console.error("❌ Fetch menu error:", err.message);
     res.status(500).json({ error: "Server error while fetching menu." });
   }
 });
