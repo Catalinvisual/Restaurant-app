@@ -3,6 +3,8 @@ import { CartContext } from "./CartContext";
 import { FaShoppingCart } from "react-icons/fa";
 import "../styles/Cart.css";
 
+const API_URL = "https://restaurant-app-backend-kvvn.onrender.com";
+
 function Cart() {
   const { cartItems, addToCart, removeFromCart } = useContext(CartContext);
 
@@ -13,14 +15,14 @@ function Cart() {
 
   const handleCheckout = async () => {
     if (cartItems.length === 0 || total <= 0) {
-      alert("Your cart is empty or the total is invalid.");
+      alert("🛑 Your cart is empty or total is invalid.");
       return;
     }
 
     try {
-      const email = "test@mailtrap.io";
+      const email = "test@mailtrap.io"; // 👉 Poți înlocui cu email real dacă ai formular
 
-      const res = await fetch("https://restaurant-app-backend-kvvn.onrender.com/checkout", {
+      const res = await fetch(`${API_URL}/checkout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items: cartItems, total, email }),
@@ -39,7 +41,7 @@ function Cart() {
       if (data.paymentUrl) {
         window.location.href = data.paymentUrl;
       } else {
-        alert("Missing payment link.");
+        alert("❌ Missing payment link.");
       }
     } catch (error) {
       console.error("❌ Checkout error:", error.message);
@@ -63,6 +65,10 @@ function Cart() {
                     src={item.image_url}
                     alt={item.name}
                     className="cart-img"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = `${process.env.PUBLIC_URL}/img/no-image.png`;
+                    }}
                   />
                 )}
 
