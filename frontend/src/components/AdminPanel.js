@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext } from "react";
 import "../styles/AdminPanel.css";
 import { CartContext } from "./CartContext";
 
+const API_URL = "https://restaurant-app-backend-kvvn.onrender.com";
+
 function AdminPanel() {
   const [menuItems, setMenuItems] = useState([]);
   const [editItem, setEditItem] = useState(null);
@@ -25,22 +27,29 @@ function AdminPanel() {
 
   const { refreshMenuItems } = useContext(CartContext);
 
+  const fetchMenuItems = async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/menu`);
+      const data = await res.json();
+      setMenuItems(data);
+    } catch (err) {
+      console.error("❌ Error loading menu:", err.message);
+    }
+  };
+
   useEffect(() => {
-    fetch("https://restaurant-app-backend-kvvn.onrender.com/menu")
-      .then((res) => res.json())
-      .then((data) => setMenuItems(data));
+    fetchMenuItems();
   }, []);
 
   const uploadImage = async (file) => {
     try {
       const form = new FormData();
       form.append("image", file);
-      const res = await fetch("https://restaurant-app-backend-kvvn.onrender.com/upload", {
+      const res = await fetch(`${API_URL}/upload`, {
         method: "POST",
         body: form,
       });
-      const text = await res.text();
-      const data = JSON.parse(text);
+      const data = await res.json();
       return data.imageUrl;
     } catch (err) {
       console.error("❌ Upload failed:", err.message);
@@ -50,7 +59,7 @@ function AdminPanel() {
 
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`https://restaurant-app-backend-kvvn.onrender.com/menu/${id}`, {
+      const res = await fetch(`${API_URL}/api/menu/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -85,7 +94,7 @@ function AdminPanel() {
     let imageUrl = formData.image_url;
     if (editFile) imageUrl = await uploadImage(editFile);
 
-    await fetch(`https://restaurant-app-backend-kvvn.onrender.com/menu/${editItem.id}`, {
+    await fetch(`${API_URL}/api/menu/${editItem.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -97,8 +106,7 @@ function AdminPanel() {
     setEditItem(null);
     setEditFile(null);
     setEditPreview("");
-    refreshMenuItems();
-    window.location.reload();
+    await fetchMenuItems();
   };
 
   const handleChangeNew = (e) => {
@@ -108,7 +116,7 @@ function AdminPanel() {
   const handleSaveNew = async (e) => {
     e.preventDefault();
     if (!newItem.name || !newItem.price || !newItem.description) {
-      alert("Please complete all fields.");
+      alert("⚠️ Please complete all fields.");
       return;
     }
 
@@ -116,11 +124,11 @@ function AdminPanel() {
     if (newFile) {
       imageUrl = await uploadImage(newFile);
     } else {
-      alert("Please upload an image.");
+      alert("⚠️ Please upload an image.");
       return;
     }
 
-    await fetch("https://restaurant-app-backend-kvvn.onrender.com/menu", {
+    await fetch(`${API_URL}/api/menu`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -132,8 +140,7 @@ function AdminPanel() {
     setNewItem({ name: "", price: "", description: "", image_url: "" });
     setNewFile(null);
     setNewPreview("");
-    refreshMenuItems();
-    window.location.reload();
+    await fetchMenuItems();
   };
 
   return (
