@@ -4,12 +4,17 @@ const cors = require("cors");
 const multer = require("multer");
 const Stripe = require("stripe");
 const nodemailer = require("nodemailer");
+const pool = require("./config/db");
+
 
 const PORT = process.env.PORT || 5000;
 const app = express();
 
+
 app.use(cors());
 app.use(express.json());
+
+
 
 // ☁️ Cloudinary image upload
 const cloudinaryStorage = require("./utils/cloudinaryStorage");
