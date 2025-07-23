@@ -3,6 +3,7 @@ import axios from "axios";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
+
 function AddProduct() {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -12,7 +13,7 @@ function AddProduct() {
 
   const handleImageUpload = async () => {
     if (!imageFile) {
-      alert("Please select an image.");
+      alert("⚠️ Selectează o imagine înainte de upload.");
       return;
     }
 
@@ -24,17 +25,17 @@ function AddProduct() {
       if (res.data.imageUrl) {
         setImageUrl(res.data.imageUrl);
       } else {
-        alert("Upload succeeded but no image URL received.");
+        alert("🖼️ Upload reușit dar URL-ul imaginii lipsește.");
       }
     } catch (err) {
-      console.error("❌ Image upload error:", err.message);
-      alert("Error uploading image.");
+      console.error("❌ Eroare upload:", err.message);
+      alert("Eroare la încărcarea imaginii.");
     }
   };
 
   const handleSubmit = async () => {
     if (!name || !price || !description || !imageUrl) {
-      alert("Please fill in all fields.");
+      alert("⚠️ Completează toate câmpurile.");
       return;
     }
 
@@ -46,61 +47,54 @@ function AddProduct() {
         image_url: imageUrl,
       });
 
-      alert("✅ Product added successfully!");
+      alert("✅ Produs adăugat cu succes!");
       setName("");
       setPrice("");
       setDescription("");
       setImageFile(null);
       setImageUrl("");
     } catch (err) {
-      console.error("❌ Product save error:", err.message);
-      alert("Error saving product.");
+      console.error("❌ Eroare salvare produs:", err.message);
+      alert("Eroare la salvarea produsului.");
     }
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "2rem auto" }}>
-      <h3>Add a product 🍽️</h3>
+    <div style={{ maxWidth: "480px", margin: "2rem auto", padding: "1rem" }}>
+      <h3 style={{ marginBottom: "1rem" }}>Adaugă un produs 🍽️</h3>
 
       <input
         type="text"
-        placeholder="Product name"
+        placeholder="Nume produs"
         value={name}
         onChange={(e) => setName(e.target.value)}
+        style={inputStyle}
       />
 
       <input
         type="number"
-        placeholder="Price"
+        placeholder="Preț (€)"
         value={price}
         onChange={(e) => setPrice(e.target.value)}
+        style={inputStyle}
       />
 
       <textarea
-        placeholder="Description"
+        placeholder="Descriere"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         rows={4}
-        style={{
-          width: "100%",
-          padding: "0.75rem",
-          marginTop: "1rem",
-          borderRadius: "8px",
-          border: "1px solid #ccc",
-          resize: "vertical",
-          fontSize: "1rem",
-          fontFamily: "inherit",
-        }}
+        style={{ ...inputStyle, resize: "vertical" }}
       />
 
       <input
         type="file"
         accept="image/*"
         onChange={(e) => setImageFile(e.target.files[0])}
-        style={{ marginTop: "1rem" }}
+        style={{ margin: "1rem 0" }}
       />
-      <button onClick={handleImageUpload} style={{ marginTop: "0.5rem" }}>
-        Upload image 🖼️
+      <button onClick={handleImageUpload} style={buttonStyle}>
+        📤 Încarcă imaginea
       </button>
 
       {imageUrl && (
@@ -111,15 +105,37 @@ function AddProduct() {
             width: "100%",
             marginTop: "1rem",
             borderRadius: "8px",
+            border: "1px solid #ccc",
           }}
         />
       )}
 
-      <button onClick={handleSubmit} style={{ marginTop: "1rem" }}>
-        Save product ✅
+      <button onClick={handleSubmit} style={{ ...buttonStyle, marginTop: "1rem" }}>
+        💾 Salvează produsul
       </button>
     </div>
   );
 }
+
+const inputStyle = {
+  width: "100%",
+  padding: "0.75rem",
+  marginBottom: "1rem",
+  borderRadius: "8px",
+  border: "1px solid #ccc",
+  fontSize: "1rem",
+  fontFamily: "inherit",
+};
+
+const buttonStyle = {
+  width: "100%",
+  padding: "0.75rem",
+  backgroundColor: "#3f51b5",
+  color: "#fff",
+  border: "none",
+  borderRadius: "8px",
+  fontSize: "1rem",
+  cursor: "pointer",
+};
 
 export default AddProduct;

@@ -28,10 +28,18 @@ function AdminPanel() {
   const { refreshMenuItems } = useContext(CartContext);
 
   useEffect(() => {
-    fetch(`${API_URL}/api/menu`)
-      .then((res) => res.json())
-      .then((data) => setMenuItems(data));
+    fetchMenuItems();
   }, []);
+
+  const fetchMenuItems = async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/menu`);
+      const data = await res.json();
+      setMenuItems(data);
+    } catch (err) {
+      console.error("❌ Error loading menu:", err.message);
+    }
+  };
 
   const uploadImage = async (file) => {
     try {
@@ -41,8 +49,7 @@ function AdminPanel() {
         method: "POST",
         body: form,
       });
-      const text = await res.text();
-      const data = JSON.parse(text);
+      const data = await res.json();
       return data.imageUrl;
     } catch (err) {
       console.error("❌ Upload failed:", err.message);
@@ -99,8 +106,7 @@ function AdminPanel() {
     setEditItem(null);
     setEditFile(null);
     setEditPreview("");
-    refreshMenuItems();
-    window.location.reload();
+    await fetchMenuItems();
   };
 
   const handleChangeNew = (e) => {
@@ -110,7 +116,7 @@ function AdminPanel() {
   const handleSaveNew = async (e) => {
     e.preventDefault();
     if (!newItem.name || !newItem.price || !newItem.description) {
-      alert("Please complete all fields.");
+      alert("⚠️ Please complete all fields.");
       return;
     }
 
@@ -118,7 +124,7 @@ function AdminPanel() {
     if (newFile) {
       imageUrl = await uploadImage(newFile);
     } else {
-      alert("Please upload an image.");
+      alert("⚠️ Please upload an image.");
       return;
     }
 
@@ -134,8 +140,7 @@ function AdminPanel() {
     setNewItem({ name: "", price: "", description: "", image_url: "" });
     setNewFile(null);
     setNewPreview("");
-    refreshMenuItems();
-    window.location.reload();
+    await fetchMenuItems();
   };
 
   return (

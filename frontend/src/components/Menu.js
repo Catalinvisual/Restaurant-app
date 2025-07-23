@@ -6,8 +6,10 @@ import { FaShoppingCart } from "react-icons/fa";
 import { toast } from "react-toastify";
 import "../styles/Menu.css";
 
+
 // 🔗 Backend public pe Render
 const API_URL = process.env.REACT_APP_API_URL;
+
 
 function Menu() {
   const [menuItems, setMenuItems] = useState([]);
@@ -63,6 +65,9 @@ function Menu() {
         <div className="product-grid">
           {menuItems.length === 0 ? (
             <p>🔄 Loading menu or no products found...</p>
+
+          
+
           ) : (
             menuItems.map((item) => {
               const quantity = getQuantity(item.id);
@@ -109,13 +114,24 @@ function Menu() {
                     ) : (
                       <>
                         <ButtonGroup className="mb-2">
-                          <Button variant="outline-danger" onClick={() => removeFromCart(item.id)}>
+
+                          
+                          <Button
+                            variant="outline-danger"
+                            onClick={() => removeFromCart(item.id)}
+                          >
                             ➖
                           </Button>
                           <Button variant="outline-secondary" disabled>
                             {quantity}
                           </Button>
-                          <Button variant="outline-success" onClick={() => addToCart(item)}>
+
+=======
+                          <Button
+                            variant="outline-success"
+                            onClick={() => addToCart(item)}
+                          >
+
                             ➕
                           </Button>
                         </ButtonGroup>
@@ -123,7 +139,9 @@ function Menu() {
                         <Button
                           variant="outline-primary"
                           size="sm"
+
                           onClick={() => toast.success(`✔️ ${name} (${quantity}) added to cart`)}
+
                         >
                           Confirm item
                         </Button>
