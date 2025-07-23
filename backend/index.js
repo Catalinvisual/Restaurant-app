@@ -1,33 +1,37 @@
+// 🔐 Load .env first
 require("dotenv").config();
+
+// 📦 Core packages
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
 const Stripe = require("stripe");
 const nodemailer = require("nodemailer");
+
+// 🐘 PostgreSQL pool
 const pool = require("./config/db");
 
+// ☁️ Cloudinary
+const cloudinaryStorage = require("./utils/cloudinaryStorage");
 
+// 🛠️ Init app
 const PORT = process.env.PORT || 5000;
 const app = express();
-
 
 app.use(cors());
 app.use(express.json());
 
-
-
-// ☁️ Cloudinary image upload
-const cloudinaryStorage = require("./utils/cloudinaryStorage");
+// ☁️ Image upload route
 const upload = multer({ storage: cloudinaryStorage });
 
 app.post("/upload", upload.single("image"), (req, res) => {
-  if (!req.file || !req.file.secure_url) {
+  if (!req.file?.secure_url) {
     return res.status(400).json({ error: "Missing or invalid image file." });
   }
   res.json({ imageUrl: req.file.secure_url });
 });
 
-// 📧 Mailtrap transport
+// 📧 Nodemailer setup
 const transporter = nodemailer.createTransport({
   host: process.env.MAIL_HOST,
   port: process.env.MAIL_PORT,
@@ -49,7 +53,7 @@ function sendOrderConfirmationEmail(toEmail, items, total) {
   });
 }
 
-// 💳 Stripe checkout
+// 💳 Stripe setup
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 app.post("/checkout", async (req, res) => {
@@ -84,18 +88,16 @@ app.post("/checkout", async (req, res) => {
   }
 });
 
-// 🌐 Root check
-app.get("/", (req, res) => res.send("✅ Express backend is running"));
-
-// 🔐 Auth & Menu routes
+// 🔐 Modular routes
 app.use("/api", require("./routes/auth"));
 app.use("/api", require("./routes/menu"));
 
-// ✅ Ping route for Render uptime
-app.get("/ping", (req, res) => res.send("🔄 Server awake"));
+// 🌐 Simple checks
+app.get("/", (_, res) => res.send("✅ Express backend is running"));
+app.get("/ping", (_, res) => res.send("🔄 Server awake"));
 
-// 🐘 PostgreSQL debug route (optional)
-app.get("/debug-db", async (req, res) => {
+// 🐘 DB Debug route
+app.get("/debug-db", async (_, res) => {
   try {
     const result = await pool.query("SELECT version()");
     res.json({ dbVersion: result.rows[0] });
@@ -104,7 +106,7 @@ app.get("/debug-db", async (req, res) => {
   }
 });
 
-// 🚀 Start server
+// 🚀 Start backend server
 app.listen(PORT, () => {
   console.log(`✅ Backend running on port ${PORT}`);
 });
