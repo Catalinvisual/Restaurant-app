@@ -20,7 +20,7 @@ app.post("/upload", upload.single("image"), (req, res) => {
     return res.status(400).json({ error: "Missing or invalid image file." });
   }
 
-  // ✅ Send back cloud-hosted image URL
+  // ✅ Return image URL
   res.json({ imageUrl: req.file.secure_url });
 });
 
@@ -81,12 +81,12 @@ app.post("/checkout", async (req, res) => {
   }
 });
 
-// 🌐 Root
+// 🌐 Root check
 app.get("/", (req, res) => res.send("✅ Express backend is running"));
 
-// 🔐 Auth & Menu routes
-app.use(require("./routes/auth"));
-app.use(require("./routes/menu"));
+// 🔐 Auth & Menu routes with /api prefix
+app.use("/api", require("./routes/auth"));
+app.use("/api", require("./routes/menu"));
 
 // 🚀 Start server
 app.listen(PORT, () => {

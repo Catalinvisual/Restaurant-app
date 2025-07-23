@@ -4,8 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 // 🔗 Backend public pe Render
-const API_URL = "http://localhost:5000";
-
+const API_URL = process.env.REACT_APP_API_URL;
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -16,7 +15,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      const res = await fetch(`${API_URL}/login`, {
+      const res = await fetch(`${API_URL}/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

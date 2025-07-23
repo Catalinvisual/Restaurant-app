@@ -13,7 +13,7 @@ const pool = new Pool({
 });
 
 //
-// ✅ MENU ROUTES (simplified)
+// ✅ MENU ROUTES (complete)
 //
 
 // 📥 Add item

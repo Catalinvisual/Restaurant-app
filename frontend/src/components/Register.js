@@ -3,8 +3,7 @@ import "../styles/Register.css";
 import { useNavigate } from "react-router-dom";
 
 // 🔗 Backend public pe Render
-const API_URL = "http://localhost:5000";
-
+const API_URL = process.env.REACT_APP_API_URL;
 
 function Register() {
   const [name, setName] = useState("");
@@ -20,7 +19,7 @@ function Register() {
     setSuccessMessage("");
 
     try {
-      const res = await fetch(`${API_URL}/register`, {
+      const res = await fetch(`${API_URL}/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password })

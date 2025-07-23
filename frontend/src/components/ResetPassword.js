@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../styles/ResetPassword.css";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 function ResetPassword() {
   const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -24,7 +26,7 @@ function ResetPassword() {
       setLoading(true);
       console.log("🔐 Sending password reset for:", { email, newPassword });
 
-      const res = await fetch("http://localhost:5000/reset-password", {
+      const res = await fetch(`${API_URL}/api/reset-password`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, newPassword }),

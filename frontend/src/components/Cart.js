@@ -3,6 +3,8 @@ import { CartContext } from "./CartContext";
 import { FaShoppingCart } from "react-icons/fa";
 import "../styles/Cart.css";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 function Cart() {
   const { cartItems, addToCart, removeFromCart } = useContext(CartContext);
 
@@ -20,7 +22,7 @@ function Cart() {
     try {
       const email = "test@mailtrap.io";
 
-      const res = await fetch("http://localhost:5000/checkout", {
+      const res = await fetch(`${API_URL}/checkout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ items: cartItems, total, email }),

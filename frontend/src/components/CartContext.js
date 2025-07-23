@@ -2,6 +2,8 @@ import { createContext, useState, useEffect } from "react";
 
 export const CartContext = createContext();
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
@@ -14,7 +16,7 @@ export function CartProvider({ children }) {
   // 🔁 Reusable fetch function
   const fetchMenuItems = async () => {
     try {
-      const res = await fetch("http://localhost:5000/menu");
+      const res = await fetch(`${API_URL}/api/menu`);
       const data = await res.json();
       setMenuItems(data);
     } catch (err) {

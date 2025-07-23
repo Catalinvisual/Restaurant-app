@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import "../styles/OrdersPanel.css";
 
-const API_URL = "http://localhost:5000";
-
+const API_URL = process.env.REACT_APP_API_URL;
 
 function OrdersPanel() {
   const [orders, setOrders] = useState([]);
@@ -15,7 +14,7 @@ function OrdersPanel() {
   const fetchOrders = async () => {
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`${API_URL}/orders`, {
+      const res = await fetch(`${API_URL}/api/orders`, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json"
@@ -35,7 +34,7 @@ function OrdersPanel() {
   const markDelivered = async (id) => {
     const token = localStorage.getItem("token");
     try {
-      await fetch(`${API_URL}/orders/${id}/deliver`, {
+      await fetch(`${API_URL}/api/orders/${id}/deliver`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`

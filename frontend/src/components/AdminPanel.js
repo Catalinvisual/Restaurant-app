@@ -2,6 +2,8 @@ import React, { useEffect, useState, useContext } from "react";
 import "../styles/AdminPanel.css";
 import { CartContext } from "./CartContext";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 function AdminPanel() {
   const [menuItems, setMenuItems] = useState([]);
   const [editItem, setEditItem] = useState(null);
@@ -26,7 +28,7 @@ function AdminPanel() {
   const { refreshMenuItems } = useContext(CartContext);
 
   useEffect(() => {
-    fetch("http://localhost:5000/menu")
+    fetch(`${API_URL}/api/menu`)
       .then((res) => res.json())
       .then((data) => setMenuItems(data));
   }, []);
@@ -35,7 +37,7 @@ function AdminPanel() {
     try {
       const form = new FormData();
       form.append("image", file);
-      const res = await fetch("http://localhost:5000/upload", {
+      const res = await fetch(`${API_URL}/upload`, {
         method: "POST",
         body: form,
       });
@@ -50,7 +52,7 @@ function AdminPanel() {
 
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/menu/${id}`, {
+      const res = await fetch(`${API_URL}/api/menu/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -85,7 +87,7 @@ function AdminPanel() {
     let imageUrl = formData.image_url;
     if (editFile) imageUrl = await uploadImage(editFile);
 
-    await fetch(`http://localhost:5000/menu/${editItem.id}`, {
+    await fetch(`${API_URL}/api/menu/${editItem.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -120,7 +122,7 @@ function AdminPanel() {
       return;
     }
 
-    await fetch("http://localhost:5000/menu", {
+    await fetch(`${API_URL}/api/menu`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -140,66 +142,36 @@ function AdminPanel() {
     <div className="admin-panel">
       <h2>🧑‍🍳 Admin Panel</h2>
 
+      {/* Add Product Section */}
       <div className="admin-card">
         <h3>➕ Add Product</h3>
         <form onSubmit={handleSaveNew}>
-          <input
-            name="name"
-            placeholder="Product name"
-            value={newItem.name}
-            onChange={handleChangeNew}
-            required
-          />
-          <input
-            name="price"
-            placeholder="Price"
-            value={newItem.price}
-            onChange={handleChangeNew}
-            required
-          />
-          <textarea
-            name="description"
-            placeholder="Description"
-            value={newItem.description}
-            onChange={handleChangeNew}
-            required
-          />
+          <input name="name" placeholder="Product name" value={newItem.name} onChange={handleChangeNew} required />
+          <input name="price" placeholder="Price" value={newItem.price} onChange={handleChangeNew} required />
+          <textarea name="description" placeholder="Description" value={newItem.description} onChange={handleChangeNew} required />
 
-          <input
-            type="file"
-            accept="image/*"
-            id="upload-new-image"
-            style={{ display: "none" }}
-            onChange={(e) => {
-              const file = e.target.files[0];
-              setNewFile(file);
-              setNewPreview(file ? URL.createObjectURL(file) : "");
-            }}
-          />
+          <input type="file" accept="image/*" id="upload-new-image" style={{ display: "none" }} onChange={(e) => {
+            const file = e.target.files[0];
+            setNewFile(file);
+            setNewPreview(file ? URL.createObjectURL(file) : "");
+          }} />
           <div className="button-row">
-            <label htmlFor="upload-new-image" className="form-button upload">
-              📁 Upload image
-            </label>
-            <button type="submit" className="form-button save">
-              💾 Save product
-            </button>
+            <label htmlFor="upload-new-image" className="form-button upload">📁 Upload image</label>
+            <button type="submit" className="form-button save">💾 Save product</button>
           </div>
 
           {newPreview && <img src={newPreview} alt="preview" width="120" />}
         </form>
       </div>
 
+      {/* Existing Products Section */}
       <div className="admin-list">
         <h3>📋 Existing Products</h3>
         <div className="admin-grid">
           {menuItems.map((item) => (
             <div className="product-admin-card" key={item.id}>
               {item.image_url && (
-                <img
-                  src={item.image_url}
-                  alt={item.name}
-                  className="product-img"
-                />
+                <img src={item.image_url} alt={item.name} className="product-img" />
               )}
               <h4>{item.name}</h4>
               <p className="price">{item.price} €</p>
@@ -213,67 +185,28 @@ function AdminPanel() {
         </div>
       </div>
 
+      {/* Edit Product Section */}
       {editItem && (
         <div className="admin-card editing fade-in">
           <h3>✏️ Edit Selected Product</h3>
           <hr className="divider" />
           <form onSubmit={handleSaveEdit}>
-            <input
-              name="name"
-              placeholder="Product name"
-              value={formData.name}
-              onChange={handleChangeEdit}
-              required
-            />
-            <input
-              name="price"
-              placeholder="Price"
-              value={formData.price}
-              onChange={handleChangeEdit}
-              required
-            />
-            <textarea
-              name="description"
-              placeholder="Description"
-              value={formData.description}
-              onChange={handleChangeEdit}
-              required
-            />
+            <input name="name" placeholder="Product name" value={formData.name} onChange={handleChangeEdit} required />
+            <input name="price" placeholder="Price" value={formData.price} onChange={handleChangeEdit} required />
+            <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChangeEdit} required />
 
-            <input
-              type="file"
-              accept="image/*"
-              id="upload-edit-image"
-              style={{ display: "none" }}
-              onChange={(e) => {
-                const file = e.target.files[0];
-                setEditFile(file);
-                setEditPreview(file ? URL.createObjectURL(file) : "");
-              }}
-            />
+            <input type="file" accept="image/*" id="upload-edit-image" style={{ display: "none" }} onChange={(e) => {
+              const file = e.target.files[0];
+              setEditFile(file);
+              setEditPreview(file ? URL.createObjectURL(file) : "");
+            }} />
             {editPreview && (
-              <img
-                src={editPreview}
-                alt="preview"
-                className="image-preview"
-                width="120"
-              />
+              <img src={editPreview} alt="preview" className="image-preview" width="120" />
             )}
-
             <div className="button-row">
-              <label htmlFor="upload-edit-image" className="form-button upload">
-                📁 Replace image
-              </label>
-              <button type="submit" className="form-button save">
-                💾 Save changes
-              </button>
-              <button
-                type="button"
-                onClick={() => setEditItem(null)}
-                className="form-button cancel"
-              >
-                ❌ Cancel
-              </button>
+              <label htmlFor="upload-edit-image" className="form-button upload">📁 Replace image</label>
+              <button type="submit" className="form-button save">💾 Save changes</button>
+              <button type="button" onClick={() => setEditItem(null)} className="form-button cancel">❌ Cancel</button>
             </div>
           </form>
         </div>
