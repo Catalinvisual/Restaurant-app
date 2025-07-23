@@ -53,6 +53,26 @@ router.get("/menu", async (req, res) => {
   }
 });
 
+// 🔍 Search menu items
+router.get("/menu/search", async (req, res) => {
+  const { q } = req.query;
+  if (!q || q.trim() === "") return res.json([]);
+
+  try {
+    const result = await pool.query(`
+      SELECT id, name, description, price, image_url
+      FROM menu_items
+      WHERE LOWER(name) LIKE LOWER($1)
+      ORDER BY name ASC
+    `, [`%${q}%`]);
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error("❌ Search error:", err.message);
+    res.status(500).json({ error: "Server error while searching." });
+  }
+});
+
 // 🔍 Get item by ID
 router.get("/menu/item/:id", async (req, res) => {
   const { id } = req.params;
@@ -72,26 +92,6 @@ router.get("/menu/item/:id", async (req, res) => {
   } catch (err) {
     console.error("❌ Error fetching item:", err.message);
     res.status(500).json({ error: "Server error while fetching item." });
-  }
-});
-
-// 🔍 Search menu items
-router.get("/menu/search", async (req, res) => {
-  const { q } = req.query;
-  if (!q || q.trim() === "") return res.json([]);
-
-  try {
-    const result = await pool.query(`
-      SELECT id, name, description, price, image_url
-      FROM menu_items
-      WHERE LOWER(name) LIKE LOWER($1)
-      ORDER BY name ASC
-    `, [`%${q}%`]);
-
-    res.json(result.rows);
-  } catch (err) {
-    console.error("❌ Search error:", err.message);
-    res.status(500).json({ error: "Server error while searching." });
   }
 });
 
