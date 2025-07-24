@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import "../styles/Menu.css";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
+console.log("🌍 API:", API_URL);
 
 function Menu() {
   const [menuItems, setMenuItems] = useState([]);
