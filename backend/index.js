@@ -14,8 +14,8 @@ const pool = require("./config/db");
 // ☁️ Cloudinary
 const cloudinaryStorage = require("./utils/cloudinaryStorage");
 
-// 🛠️ Init app
-const PORT = process.env.PORT || 5000;
+// 🛠️ Init app — Render injectează PORT automat
+const PORT = process.env.PORT || 10000;
 const app = express();
 
 app.use(cors());
