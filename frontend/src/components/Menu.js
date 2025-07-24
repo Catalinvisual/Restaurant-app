@@ -6,11 +6,7 @@ import { FaShoppingCart } from "react-icons/fa";
 import { toast } from "react-toastify";
 import "../styles/Menu.css";
 
-
-// 🔗 Backend public pe Render
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-
 
 function Menu() {
   const [menuItems, setMenuItems] = useState([]);
