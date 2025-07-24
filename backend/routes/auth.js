@@ -105,8 +105,10 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// 🔄 Password Reset
+// 🔄 Password Reset (Endpoint: /api/reset-password)
 router.put("/reset-password", async (req, res) => {
+  console.log("🔁 Attempting password reset");
+
   const { email, newPassword } = req.body;
 
   if (!email || !newPassword) {
@@ -132,6 +134,7 @@ router.put("/reset-password", async (req, res) => {
       [hashedPassword, email.trim().toLowerCase()]
     );
 
+    console.log("✅ Password reset successful for:", email);
     res.json({ message: "Password successfully reset!" });
   } catch (err) {
     console.error("❌ Password reset error:", err.message);
